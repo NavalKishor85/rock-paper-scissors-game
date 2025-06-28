@@ -86,7 +86,7 @@ def print_result(result, ROUNDS_WIN, STRIKE, computer):
         print("Your Score is : ", ROUNDS_WIN)
     if STRIKE >= 2:
         print("Hurray! You won ", STRIKE, "times in a row.")
-    print("Because the computer has chosen", computer, ".")
+    print("Because the computer has chosen " + computer + ".")
     print(" ")
 
 while True:

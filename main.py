@@ -5,9 +5,9 @@ import random
 #Then we take input from the user
 #Then we check who wins
 print(" ")
-print("This is ROCK PAPER SCISSORS game")
-print("You have three choices 'Rock', 'Paper', 'Scissors'.")
-print("You can Exit By Entering 'Exit'.")
+print("This is a 'ROCK PAPER SCISSORS' game")
+print("You can enter 'R' for 'Rock', 'P' for 'Paper' and 'S' for 'Scissors'")
+print("And you can exit the game By entering 'Exit'")
 print(" ")
 
 ROUNDS_WIN = 0 #how many times user won
@@ -15,26 +15,36 @@ STRIKE = 0 #how many times user won in a row
 
 def computer_choice():
     # Randomly select Rock, Paper, or Scissors for the computer
-    random_number = random.randint(1,3)
-    if (random_number==1):
-        computer = "Rock"
-    elif (random_number==2):
-        computer = "Paper"
-    else:
-        computer = "Scissors"
+    choice_list = ['Rock', 'Paper', 'Scissors']
+    computer = random.choice(choice_list)
     return computer
+    # random_number = random.randint(1,3)
+    # if (random_number==1):
+    #     computer = "Rock"
+    # elif (random_number==2):
+    #     computer = "Paper"
+    # else:
+    #     computer = "Scissors"
+    # return computer
 
 def take_input_from_user():
-    # Take input from user and validate it
-    user = input("Enter your choice : ")
-    if (user=="rock" or user=="Rock"):
-        user = "Rock"
-    elif (user=="paper" or user=="Paper"):
-        user = "Paper"
-    elif (user=="scissors" or user=="Scissors"):
-        user = "Scissors"
-    else:
-        user = input("Enter only 'Rock', 'Paper' and 'Scissors': ")
+    # Take input from user until user enter the valid input
+    while True:
+        user = input("Enter your choice : ")
+        if (user=="rock" or user=="Rock") or (user=='R' or user=='r'):
+            user = "Rock"
+            break
+        elif (user=="paper" or user=="Paper") or (user=='P' or user=='p'):
+            user = "Paper"
+            break
+        elif (user=="scissors" or user=="Scissors") or (user=='S' or user=='s'):
+            user = "Scissors"
+            break
+        elif (user=='exit' or user=='Exit'):
+            user = 'Exit'
+            break
+        else:
+            user = input("Enter only 'Rock', 'Paper' and 'Scissors': ")
     return user
 
 def compute_result(user, computer):
@@ -77,16 +87,18 @@ def print_result(result, ROUNDS_WIN, STRIKE, computer):
     # Print the result of the round and current scores
     if result == "won":
         print("You won!")
-        print("Your Score is : ", ROUNDS_WIN)
+        print("Because the computer has chosen " + computer + ".")
     elif result == "tie":
         print("It's a tie!")
-        print("Your Score is : ", ROUNDS_WIN)
+        print("Because the computer has also chosen " + computer + ".")
     else:
         print("You lost!")
-        print("Your Score is : ", ROUNDS_WIN)
-    if STRIKE >= 2:
+        print("Because the computer has chosen " + computer + ".")
+    
+    print("Your Score is : ", ROUNDS_WIN)
+
+    if (STRIKE >= 2):
         print("Hurray! You won ", STRIKE, "times in a row.")
-    print("Because the computer has chosen " + computer + ".")
     print(" ")
 
 while True:
@@ -95,6 +107,11 @@ while True:
 
     # take input 
     user = take_input_from_user()
+
+    # check if your wants to play or exit
+    if (user == 'Exit'):
+        print("Exiting...")
+        break
 
     # calculate result 
     result = compute_result(user, computer)

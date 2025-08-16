@@ -1,17 +1,18 @@
 import random
 
-#This is a Rock, Paper, Scissors game
-#First computer will select one of the three choices
-#Then we take input from the user
-#Then we check who wins
+# Rock Paper Scissors Game
+# The computer randomly selects one of the three choices: Rock, Paper, or Scissors.
+# The user is prompted to enter their choice.
+# The winner is determined based on the classic rules of the game.
+
 print(" ")
 print("This is a 'ROCK PAPER SCISSORS' game")
-print("You can enter 'R' for 'Rock', 'P' for 'Paper' and 'S' for 'Scissors'")
-print("And you can exit the game By entering 'Exit'")
+print("You can enter 'R' for 'Rock', 'P' for 'Paper', and 'S' for 'Scissors'")
+print("You can exit the game by entering 'Exit'")
 print(" ")
 
-ROUNDS_WIN = 0 #how many times user won
-STRIKE = 0 #how many times user won in a row
+ROUNDS_WIN = 0  # Number of times the user has won
+STRIKE = 0      # Number of consecutive wins by the user
 
 def computer_choice():
     # Randomly select Rock, Paper, or Scissors for the computer
@@ -20,27 +21,27 @@ def computer_choice():
     return computer
 
 def take_input_from_user():
-    # Take input from user until user enter the valid input
+    # Prompt the user for input until a valid choice is entered
     while True:
-        user = input("Enter your choice : ")
-        if (user=="rock" or user=="Rock") or (user=='R' or user=='r'):
+        user = input("Enter your choice: ")
+        if (user == "rock" or user == "Rock") or (user == 'R' or user == 'r'):
             user = "Rock"
             break
-        elif (user=="paper" or user=="Paper") or (user=='P' or user=='p'):
+        elif (user == "paper" or user == "Paper") or (user == 'P' or user == 'p'):
             user = "Paper"
             break
-        elif (user=="scissors" or user=="Scissors") or (user=='S' or user=='s'):
+        elif (user == "scissors" or user == "Scissors") or (user == 'S' or user == 's'):
             user = "Scissors"
             break
-        elif (user=='exit' or user=='Exit'):
+        elif (user == 'exit' or user == 'Exit'):
             user = 'Exit'
             break
         else:
-            user = input("Enter only 'Rock', 'Paper' and 'Scissors': ")
+            user = input("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors': ")
     return user
 
 def compute_result(user, computer):
-    # Compute the result of the game based on user and computer choices
+    # Determine the result of the round based on user and computer choices
     if (computer=="Rock"):
         if (user=="Paper"):
             result = "won"
@@ -65,7 +66,7 @@ def compute_result(user, computer):
     return result
 
 def counts_win(result, ROUNDS_WIN, STRIKE):
-    # Update win and strike counters based on result
+    # Update win and streak counters based on the result
     if result == "won":
         ROUNDS_WIN += 1
         STRIKE += 1
@@ -76,7 +77,7 @@ def counts_win(result, ROUNDS_WIN, STRIKE):
     return ROUNDS_WIN, STRIKE
 
 def print_result(result, ROUNDS_WIN, STRIKE, computer):
-    # Print the result of the round and current scores
+    # Print the result of the round and display the current score and streak
     if result == "won":
         print("You won!")
         print("Because the computer has chosen " + computer + ".")
@@ -94,26 +95,25 @@ def print_result(result, ROUNDS_WIN, STRIKE, computer):
     print(" ")
 
 while True:
-    # Generate random choice between Rock, Paper, Scissors
+    # Generate a random choice for the computer
     computer = computer_choice()
 
-    # take input 
+    # Take input from the user
     user = take_input_from_user()
 
-    # check if your wants to play or exit
+    # Check if the user wants to exit the game
     if (user == 'Exit'):
         print("Exiting...")
         break
 
-    # calculate result 
+    # Determine the result of the round
     result = compute_result(user, computer)
 
-    # count how many times user wins
-    # Strike is a count when user wins in a row, rest to 0 if user lost or it is a tie
+    # Update win and streak counters
     win_result_counts = counts_win(result, ROUNDS_WIN, STRIKE)
 
     ROUNDS_WIN = win_result_counts[0]
     STRIKE = win_result_counts[1]
 
-    # Print Result and tell your score
+    # Print the result and current score
     print_result(result, ROUNDS_WIN, STRIKE, computer)

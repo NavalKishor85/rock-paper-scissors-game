@@ -37,7 +37,7 @@ def take_input_from_user():
             user = 'Exit'
             break
         else:
-            user = input("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors': ")
+            print("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors'.")
     return user
 
 def compute_result(user, computer):
@@ -65,26 +65,20 @@ def compute_result(user, computer):
             result = "tie"
     return result
 
-def counts_win(result, ROUNDS_WIN, STRIKE):
+def update_result(result, ROUNDS_WIN, STRIKE, computer):
     # Update win and streak counters based on the result
+    # Print the result of the round and display the current score and streak
     if result == "won":
         ROUNDS_WIN += 1
         STRIKE += 1
-    elif result == "tie":
-        STRIKE = 0
-    else:
-        STRIKE = 0
-    return ROUNDS_WIN, STRIKE
-
-def print_result(result, ROUNDS_WIN, STRIKE, computer):
-    # Print the result of the round and display the current score and streak
-    if result == "won":
         print("You won!")
         print("Because the computer has chosen " + computer + ".")
     elif result == "tie":
+        STRIKE = 0
         print("It's a tie!")
         print("Because the computer has also chosen " + computer + ".")
     else:
+        STRIKE = 0
         print("You lost!")
         print("Because the computer has chosen " + computer + ".")
     
@@ -93,6 +87,7 @@ def print_result(result, ROUNDS_WIN, STRIKE, computer):
     if (STRIKE >= 2):
         print("Hurray! You won ", STRIKE, "times in a row.")
     print(" ")
+    return ROUNDS_WIN, STRIKE
 
 while True:
     # Generate a random choice for the computer
@@ -110,10 +105,7 @@ while True:
     result = compute_result(user, computer)
 
     # Update win and streak counters
-    win_result_counts = counts_win(result, ROUNDS_WIN, STRIKE)
-
-    ROUNDS_WIN = win_result_counts[0]
-    STRIKE = win_result_counts[1]
-
     # Print the result and current score
-    print_result(result, ROUNDS_WIN, STRIKE, computer)
+    score = update_result(result, ROUNDS_WIN, STRIKE, computer)
+    ROUNDS_WIN = score[0]
+    STRIKE = score[1]

@@ -1,1 +1,2 @@
-# This is my first project repo
+# This is My First Project Repository
+This is a game created using python

@@ -10,12 +10,14 @@ This project is designed to help beginners learn Python programming by building 
 - User-friendly command-line interface
 - Tracks your total wins and winning streaks
 - Option to exit the game at any time
+- Store your game store untile you don't exit
 
 ## How to Play
 1. Run the `main.py` file using Python.
 2. Enter 'R' for Rock, 'P' for Paper, or 'S' for Scissors when prompted.
 3. The computer will also make its choice, and the winner will be displayed.
-4. To exit the game, type 'Exit'.
+4. If you need help in game at any time you can enter 'help' to see intructions and rules of the game.
+5. To exit the game, type 'Exit'.
 
 ## Requirements
 - Python 3.x

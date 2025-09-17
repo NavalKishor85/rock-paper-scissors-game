@@ -45,15 +45,15 @@ def take_input_from_user():
             continue
         if user_input in ['rock', 'r']:
             return "Rock"
-        elif user_input in ['paper', 'p']:
+        elif user_input in ['paper', 'p', 'PAPER']:
             return "Paper"
-        elif user_input in ['scissors', 's']:
+        elif user_input in ['scissors', 's', 'SCISSORS']:
             return "Scissors"
-        elif user_input in ['exit', 'e']:
+        elif user_input in ['exit', 'e', 'EXIT']:
             return "Exit"
-        elif user_input in ['help', 'h']:
+        elif user_input in ['help', 'h', 'HELP']:
             return "Help"
-        elif user_input in ['leaderboard', 'l']:
+        elif user_input in ['leaderboard', 'l', 'LEADERBOARD']:
             return "leaderboard"
         else:
             print("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors'.")
@@ -145,8 +145,8 @@ def main():
         
         # Check if the user wants to exit the game
         if (user_choice == 'Exit'):
-            confirm = input("Do you want to exit the game? [y/n] ")
-            if confirm in ['Y', 'y', 'yes', 'Yes']:
+            confirm = input("Do you want to exit the game? [y/n] ").strip().lower()
+            if confirm in ['y', 'yes', '1']:
                 print("Exiting...")
                 break
             else:
@@ -175,3 +175,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

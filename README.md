@@ -34,7 +34,7 @@ This project is designed to help beginners learn Python programming by building 
    - `[E]` Exit
    - `[H]` Help
    - `[L]` Leaderboard
-4. To exit, type `Exit` or `E` and confirm.
+4. To exit, type `Exit` or `E` and confirm by entering [Y].
 
 ## Rules
 

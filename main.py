@@ -1,6 +1,10 @@
 """
 ----Rock Paper Scissors Game----
-Command-line game: user vs computer. Computer randomly picks Rock, Paper, or Scissors. User enters choice. Winner is decided by classic rules. Tracks total wins and win streaks. User can exit anytime."""
+Command-line game: user vs computer. 
+The computer randomly picks Rock, Paper, or Scissors. The user enters their choice. 
+The winner is decided by classic rules. Tracks total wins and win streaks. 
+The user can exit at any time.
+"""
 import random
 
 CHOICES = ['Rock', 'Paper', 'Scissors']
@@ -37,23 +41,23 @@ def select_computer_choice(CHOICES):
     return computer_choice
 
 def take_input_from_user():
-    # Prompt user until a valid choice is entered
+    # Prompt the user until a valid choice is entered
     while True:
         user_input = input("Enter your choice: ").strip().lower()
         if user_input == '':
-            print("You entered nothing. Please enter 'Rock', 'Paper', or 'Scissors'")
+            print("You entered nothing. Please enter 'Rock', 'Paper', or 'Scissors'.")
             continue
         if user_input in ['rock', 'r']:
             return "Rock"
-        elif user_input in ['paper', 'p', 'PAPER']:
+        elif user_input in ['paper', 'p']:
             return "Paper"
-        elif user_input in ['scissors', 's', 'SCISSORS']:
+        elif user_input in ['scissors', 's']:
             return "Scissors"
-        elif user_input in ['exit', 'e', 'EXIT']:
+        elif user_input in ['exit', 'e']:
             return "Exit"
-        elif user_input in ['help', 'h', 'HELP']:
+        elif user_input in ['help', 'h']:
             return "Help"
-        elif user_input in ['leaderboard', 'l', 'LEADERBOARD']:
+        elif user_input in ['leaderboard', 'l']:
             return "leaderboard"
         else:
             print("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors'.")
@@ -84,7 +88,7 @@ def compute_result(user_choice, computer_choice):
     return result
 
 def getemoji(user_choice, computer_choice):
-    # Define one emoji to user and one emoji to computer based on what's their choices
+    # Define one emoji for the user and one for the computer based on their choices
     if (computer_choice=="Rock"):
         computer_emoji = "✊"
     elif (computer_choice=="Paper"):
@@ -92,7 +96,7 @@ def getemoji(user_choice, computer_choice):
     elif (computer_choice=="Scissors"):
         computer_emoji = "✌️"
     else:
-        pass
+        computer_emoji = ""
     if (user_choice=="Rock"):
         user_emoji = "✊"
     elif (user_choice=="Paper"):
@@ -100,7 +104,7 @@ def getemoji(user_choice, computer_choice):
     elif (user_choice=="Scissors"):
         user_emoji = "✌️"
     else:
-        pass
+        user_emoji = ""
     return user_emoji, computer_emoji
 
 def update_score(result, user_win_count, user_win_streak, computer_win_count):
@@ -137,10 +141,10 @@ def print_result(result, round_number, user_choice, computer_choice, user_win_co
 
 def display_scoreboard(round_number, user_win_count, computer_win_count, best_streak):
     print("\n------ Scoreboard ------")
-    print(f"You have played total {round_number - 1} rounds")
+    print(f"You have played a total of {round_number - 1} rounds")
     print(f"You won {user_win_count} times")
     print(f"The Computer won {computer_win_count} times")
-    print(f"Your best streak is of {best_streak}")
+    print(f"Your best streak is {best_streak}")
     print("-----------------------\n")
 
 def main():
@@ -195,7 +199,7 @@ def main():
         # Print the result and current score, including round and choices
         print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, user_emoji, computer_emoji)
 
-        # Increament round
+        # Increment round
         round_number += 1
 
 if __name__ == "__main__":

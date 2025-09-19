@@ -1,10 +1,10 @@
 # Rock Paper Scissors Game
 
-Welcome to the Rock Paper Scissors Game! This is a simple command-line game built with Python where you can play the classic game of Rock, Paper, Scissors against the computer.
+Welcome to the Rock Paper Scissors Game! This is a simple command-line game built with Python, where you can play the classic game of Rock, Paper, Scissors against the computer.
 
 ## Project Overview
 
-This project is designed to help beginners learn Python programming by building a fun and interactive game. The computer randomly selects Rock, Paper, or Scissors, and you try to beat it by making your own choice. The game keeps track of your wins and winning streaks, and you can exit the game at any time.
+This project is designed to help beginners learn Python programming by building an interactive nad fun game. The computer randomly selects Rock, Paper, or Scissors, and you try to beat it by making your own choice. The game keeps track of your wins and winning streaks, and you can exit the game at any time.
 
 ## Features
 
@@ -16,8 +16,8 @@ This project is designed to help beginners learn Python programming by building 
   - `Exit` or `E` (to quit)
   - `Help` or `H` (to view instructions)
   - `Leaderboard` or `L` (to view scoreboard)
-- Tracks total user wins, computer wins, and your best win streak
-- Scoreboard and help available at any time
+- Tracks your total wins, computer wins, and the best win streak
+- Scoreboard and help are available at any time
 - Input is case-insensitive and ignores extra spaces
 
 ## How to Play
@@ -34,7 +34,7 @@ This project is designed to help beginners learn Python programming by building 
    - `[E]` Exit
    - `[H]` Help
    - `[L]` Leaderboard
-4. To exit, type `Exit` or `E` and confirm by entering `Y`.
+4. To exit, type `Exit` or `E`, and confirm by entering `Y`.
 
 ## Rules
 
@@ -62,7 +62,7 @@ Your score is: 1
 
 ## Getting Started
 
-To start the game, open a terminal in this directory and run:
+To start the game, open a terminal in this directory, and run:
 ```powershell
 python main.py
 ```

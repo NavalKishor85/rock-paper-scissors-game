@@ -83,6 +83,26 @@ def compute_result(user_choice, computer_choice):
             result = "tie"
     return result
 
+def getemoji(user_choice, computer_choice):
+    # Define one emoji to user and one emoji to computer based on what's their choices
+    if (computer_choice=="Rock"):
+        computer_emoji = "✊"
+    elif (computer_choice=="Paper"):
+        computer_emoji = "✋"
+    elif (computer_choice=="Scissors"):
+        computer_emoji = "✌️"
+    else:
+        pass
+    if (user_choice=="Rock"):
+        user_emoji = "✊"
+    elif (user_choice=="Paper"):
+        user_emoji = "✋"
+    elif (user_choice=="Scissors"):
+        user_emoji = "✌️"
+    else:
+        pass
+    return user_emoji, computer_emoji
+
 def update_score(result, user_win_count, user_win_streak, computer_win_count):
     # Update win and streak counters
     if result == "won":
@@ -95,9 +115,10 @@ def update_score(result, user_win_count, user_win_streak, computer_win_count):
         user_win_streak = 0
     return user_win_count, user_win_streak, computer_win_count
 
-def print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak):
+def print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, user_emoji, computer_emoji):
     # Print round number, choices, result, and current score
     print(f"\n----- Round {round_number} -----")
+    print(f"     {user_emoji} Vs {computer_emoji}")
     print(f"You chose: {user_choice}")
     print(f"Computer chose: {computer_choice}")
     if result == "won":
@@ -106,11 +127,12 @@ def print_result(result, round_number, user_choice, computer_choice, user_win_co
         print("It's a tie! 😐")
     else:
         print("You lost! 😥")
+        
     print(f"Your score is: {user_win_count}")
 
     # Print message for win streak
     if user_win_streak >= 2:
-        print(f"Congratulations! You've won {user_win_streak} times in a row!")
+        print(f"Congratulations! You've won {user_win_streak} times in a row! 🤩")
     print("-------------------\n")
 
 def display_scoreboard(round_number, user_win_count, computer_win_count, best_streak):
@@ -167,8 +189,11 @@ def main():
         if (user_win_streak >= best_streak):
             best_streak = user_win_streak
 
+        # Define emojis
+        user_emoji, computer_emoji = getemoji(user_choice, computer_choice)
+
         # Print the result and current score, including round and choices
-        print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak)
+        print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, user_emoji, computer_emoji)
 
         # Increament round
         round_number += 1

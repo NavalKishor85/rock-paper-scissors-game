@@ -46,10 +46,14 @@ This project is designed to help beginners learn Python programming by building 
 
 ```
 Enter your choice: r
+
+----- Round 1 -----
+     ✊ Vs ✌️
 You chose: Rock
-Computer chose: Paper
-You lost! 😥
-Your score is: 0
+Computer chose: Scissors
+You won! 🥳
+Your score is: 1
+-------------------
 ```
 
 ## Requirements

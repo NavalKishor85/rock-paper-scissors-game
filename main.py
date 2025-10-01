@@ -41,29 +41,30 @@ def select_computer_choice(CHOICES):
     return computer_choice
 
 def take_input_from_user():
-    # Prompt the user until a valid choice is entered
+    # Prompt the user until a valid choice is entered.
+    shortcuts = {
+        'rock': 'Rock', 'r': 'Rock',
+        'paper': 'Paper', 'p': 'Paper',
+        'scissors': 'Scissors', 's': 'Scissors',
+        'exit': 'Exit', 'e': 'Exit',
+        'help': 'Help', 'h': 'Help',
+        'leaderboard': 'Leaderboard', 'l': 'Leaderboard'
+    }
     while True:
-        user_input = input("Enter your choice: ").strip().lower()
-        if user_input == '':
+        try:
+            user_input = input("Enter your choice: ").strip().lower()
+        except EOFError:
+            print("Input error. Please try again.")
+            continue
+        if not user_input:
             print("You entered nothing. Please enter 'Rock', 'Paper', or 'Scissors'.")
             continue
-        if user_input in ['rock', 'r']:
-            return "Rock"
-        elif user_input in ['paper', 'p']:
-            return "Paper"
-        elif user_input in ['scissors', 's']:
-            return "Scissors"
-        elif user_input in ['exit', 'e']:
-            return "Exit"
-        elif user_input in ['help', 'h']:
-            return "Help"
-        elif user_input in ['leaderboard', 'l']:
-            return "leaderboard"
-        else:
-            print("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors'.")
+        if user_input in shortcuts:
+            return shortcuts[user_input]
+        print("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors'.")
 
 def compute_result(user_choice, computer_choice):
-    # Determine round result
+    # Determine round result based on user and computer choices.
     if (computer_choice=="Rock"):
         if (user_choice=="Paper"):
             result = "won"
@@ -88,7 +89,7 @@ def compute_result(user_choice, computer_choice):
     return result
 
 def getemoji(user_choice, computer_choice):
-    # Define one emoji for the user and one for the computer based on their choices
+    # Return emojis for user and computer choices.
     if (computer_choice=="Rock"):
         computer_emoji = "✊"
     elif (computer_choice=="Paper"):
@@ -108,7 +109,7 @@ def getemoji(user_choice, computer_choice):
     return user_emoji, computer_emoji
 
 def update_score(result, user_win_count, user_win_streak, computer_win_count):
-    # Update win and streak counters
+    # Update win and streak counters based on result.
     if result == "won":
         user_win_count += 1
         user_win_streak += 1
@@ -120,7 +121,7 @@ def update_score(result, user_win_count, user_win_streak, computer_win_count):
     return user_win_count, user_win_streak, computer_win_count
 
 def print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, user_emoji, computer_emoji):
-    # Print round number, choices, result, and current score
+    # Print round number, choices, result, and current score.
     print(f"\n----- Round {round_number} -----")
     print(f"     {user_emoji} Vs {computer_emoji}")
     print(f"You chose: {user_choice}")
@@ -139,68 +140,73 @@ def print_result(result, round_number, user_choice, computer_choice, user_win_co
         print(f"Congratulations! You've won {user_win_streak} times in a row! 🤩")
     print("-------------------\n")
 
-def display_scoreboard(round_number, user_win_count, computer_win_count, best_streak):
+def display_scoreboard(rounds_played, user_win_count, computer_win_count, hi_score):
+    # Display the scoreboard with rounds played, wins, and best streak.
     print("\n------ Scoreboard ------")
-    print(f"You have played a total of {round_number - 1} rounds")
+    print(f"You have played a total of {rounds_played - 1} rounds")
     print(f"You won {user_win_count} times")
     print(f"The Computer won {computer_win_count} times")
-    print(f"Your best streak is {best_streak}")
+    print(f"Your best streak is {hi_score}")
     print("-----------------------\n")
 
+def read_int_from_file(filename, default=0):
+    # Read an integer from a file, return default if error.
+    try:
+        with open(filename) as f:
+            return int(f.read().strip())
+    except (FileNotFoundError, ValueError):
+        return default
+
+def write_int_to_file(filename, value):
+    """Write an integer value to a file."""
+    try:
+        with open(filename, 'w') as f:
+            f.write(str(value))
+    except Exception as e:
+        print(f"Error writing to {filename}: {e}")
+
 def main():
-
     display_rules()
-
-    user_win_count = 0       # Number of times the user has won
-    computer_win_count = 0   # Number of times the computer has won
-    user_win_streak = 0      # Number of consecutive wins by the user
-    round_number = 1         # Round counter
-    best_streak = 0          # Best score in consecutive wins by user
-
-    while True:
-        # Generate a random choice for the computer
-        computer_choice = select_computer_choice(CHOICES)
-
-        # Take input from the user
-        user_choice = take_input_from_user()
-
-        # Call help if user requests it
-        if user_choice == 'Help':
-            help()
-            continue
-        
-        # Check if the user wants to exit the game
-        if (user_choice == 'Exit'):
-            confirm = input("Do you want to exit the game? [y/n] ").strip().lower()
-            if confirm in ['y', 'yes', '1']:
-                print("Exiting...")
-                break
-            else:
+    user_win_count = 0
+    computer_win_count = 0
+    user_win_streak = 0
+    round_number = 1
+    best_streak = 0
+    HIGH_SCORE_FILE = "highscore.txt"
+    ROUNDS_FILE = "rounds.txt"
+    high_score = read_int_from_file(HIGH_SCORE_FILE)
+    rounds_played = read_int_from_file(ROUNDS_FILE)
+    try:
+        while True:
+            computer_choice = select_computer_choice(CHOICES)
+            user_choice = take_input_from_user()
+            if user_choice == 'Help':
+                help()
                 continue
-
-        # Display user score 
-        if (user_choice == "leaderboard"):
-            display_scoreboard(round_number, user_win_count, computer_win_count, best_streak)
-            continue
-
-        # Determine the result of the round
-        result = compute_result(user_choice, computer_choice)
-
-        # Update win and streak counters
-        user_win_count, user_win_streak, computer_win_count  = update_score(result, user_win_count, user_win_streak, computer_win_count)
-
-        # Save highest streak of user
-        if (user_win_streak >= best_streak):
-            best_streak = user_win_streak
-
-        # Define emojis
-        user_emoji, computer_emoji = getemoji(user_choice, computer_choice)
-
-        # Print the result and current score, including round and choices
-        print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, user_emoji, computer_emoji)
-
-        # Increment round
-        round_number += 1
+            if user_choice == 'Exit':
+                confirm = input("Do you want to exit the game? [y/n] ").strip().lower()
+                if confirm in ['y', 'yes', '1']:
+                    write_int_to_file(ROUNDS_FILE, rounds_played + (round_number - 1))
+                    print("Exiting...")
+                    break
+                else:
+                    continue
+            if user_choice == "Leaderboard":
+                display_scoreboard(rounds_played + round_number - 1, user_win_count, computer_win_count, high_score)
+                continue
+            result = compute_result(user_choice, computer_choice)
+            user_win_count, user_win_streak, computer_win_count = update_score(result, user_win_count, user_win_streak, computer_win_count)
+            if user_win_streak > best_streak:
+                best_streak = user_win_streak
+            if user_win_streak > high_score and user_win_streak > 1:
+                high_score = user_win_streak
+                print(f"\nYou have set a new high streak of {high_score} wins!")
+                write_int_to_file(HIGH_SCORE_FILE, high_score)
+            print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, getemoji(user_choice, computer_choice)[0], getemoji(user_choice, computer_choice)[1])
+            round_number += 1
+    except KeyboardInterrupt:
+        print("\nGame interrupted. Exiting...")
+        write_int_to_file(ROUNDS_FILE, rounds_played + (round_number - 1))
 
 if __name__ == "__main__":
     main()

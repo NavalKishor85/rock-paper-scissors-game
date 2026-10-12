@@ -22,29 +22,67 @@ This project is designed to help beginners learn Python programming by building 
 - Scores and streaks are saved in text files (`highscore.txt` and `rounds.txt`) and persist between sessions
 - Graceful error handling for file operations and user input
 
+## Getting Started
+
+Open a terminal and run the commands below based on your operating system.
+
+---
+
+### Windows
+
+```powershell
+git clone https://github.com/your-username/rock-paper-scissors-game.git
+cd rock-paper-scissors-game
+winget install Python.Python.3
+python main.py
+```
+
+---
+
+### macOS
+
+```bash
+git clone https://github.com/your-username/rock-paper-scissors-game.git
+cd rock-paper-scissors-game
+brew install python
+python3 main.py
+```
+
+---
+
+### Linux (Debian/Ubuntu)
+
+```bash
+git clone https://github.com/your-username/rock-paper-scissors-game.git
+cd rock-paper-scissors-game
+sudo apt update && sudo apt install python3
+python3 main.py
+```
+
+---
+
 ## How to Play
 
-1. Run the script:
-   ```powershell
-   python main.py
-   ```
-2. Enter your choice each round (`Rock`, `Paper`, or `Scissors`).
-3. Use shortcuts for quick commands:
-   - `[R]` Rock
-   - `[P]` Paper
-   - `[S]` Scissors
-   - `[E]` Exit (confirm with Y or N)
-   - `[H]` Help
-   - `[L]` Leaderboard
-4. To exit, type `Exit` or `E`, and confirm by entering `Y` or `Yes`.
+Once the game starts, enter your choice each round using the following commands:
 
-## Rules
+| Input | Action |
+|---|---|
+| `R` or `Rock` | Play Rock ✊ |
+| `P` or `Paper` | Play Paper 🖐️ |
+| `S` or `Scissors` | Play Scissors ✌️ |
+| `H` or `Help` | View in-game instructions |
+| `L` or `Leaderboard` | View the scoreboard |
+| `E` or `Exit` | Quit the game |
 
-- Rock beats Scissors
-- Paper beats Rock
-- Scissors beats Paper
+> **Note:** Input is **case-insensitive** — `r`, `R`, and `rock` are all accepted. When exiting, confirm with `Y` or `N`.
 
-## Example
+### Rules
+
+- **Rock** beats Scissors
+- **Paper** beats Rock
+- **Scissors** beats Paper
+
+### Example Round
 
 ```
 Enter your choice: r
@@ -58,17 +96,6 @@ Your score is: 1
 -------------------
 ```
 
-## Requirements
+> **Tip:** If you interrupt the game at any time with `Ctrl+C`, your progress and scores will be saved automatically.
 
-- Python 3.x
-
-## Getting Started
-
-To start the game, open a terminal in this directory, and run:
-```powershell
-python main.py
-```
-
-If you interrupt the game (Ctrl+C), your progress will be saved automatically.
-
-Enjoy playing and improving your Python skills!
+Enjoy the game and happy coding!

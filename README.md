@@ -31,7 +31,7 @@ Open a terminal and run the commands below based on your operating system.
 ### Windows
 
 ```powershell
-git clone https://github.com/your-username/rock-paper-scissors-game.git
+git clone https://github.com/NavalKishor85/rock-paper-scissors-game.git
 cd rock-paper-scissors-game
 winget install Python.Python.3
 python main.py
@@ -42,7 +42,7 @@ python main.py
 ### macOS
 
 ```bash
-git clone https://github.com/your-username/rock-paper-scissors-game.git
+git clone https://github.com/NavalKishor85/rock-paper-scissors-game.git
 cd rock-paper-scissors-game
 brew install python
 python3 main.py
@@ -53,7 +53,7 @@ python3 main.py
 ### Linux (Debian/Ubuntu)
 
 ```bash
-git clone https://github.com/your-username/rock-paper-scissors-game.git
+git clone https://github.com/NavalKishor85/rock-paper-scissors-game.git
 cd rock-paper-scissors-game
 sudo apt update && sudo apt install python3
 python3 main.py

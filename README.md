@@ -12,7 +12,8 @@ The whole game is in one file (`main.py`) and uses only built-in Python, so ther
 
 - [Features](#features)
 - [Getting Started](#getting-started)
-- [Usage](#usage)
+- [How to Run](#how-to-run)
+- [How to Play](#how-to-play)
 - [Example](#example)
 - [How Scoring Works](#how-scoring-works)
 - [Saved Data](#saved-data)

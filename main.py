@@ -3,65 +3,114 @@
 Command-line game: user vs computer. 
 The computer randomly picks Rock, Paper, or Scissors. The user enters their choice. 
 The winner is decided by classic rules. Tracks total wins and win streaks. 
-The user can exit at any time.
 """
 import random
+import os
 
 CHOICES = ['Rock', 'Paper', 'Scissors']
+STATS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "user_states.txt")
+STATS_LINE_NUM = {
+    "rounds_played": 0,
+    "user_wins": 1,
+    "computer_wins": 2,
+    "high_score": 3
+}
+WIDTH = 80
 
 
 def display_rules():
-    # Display the game rules and instructions
-    print("\n---- Welcome to 'ROCK PAPER SCISSORS'! ----")
-    print("- Enter 'Rock', 'Paper', or 'Scissors' to play")
-    print("- Enter 'Exit' at any time to quit the game")
-    print("Shortcuts:")
-    print("  [R] - Rock, [P] - Paper, [S] - Scissors, [E] - Exit, [H] - Help, [L] - Leaderboard")
-    print("(Input is case-insensitive and leading/trailing spaces are ignored)")
-    print("  ")
+    print(r"""
++--------------------------------------------------------------------------------+
+|            ____   ___   ____ _  __    ____   _    ____  _____ ____             |    
+|           |  _ \ / _ \ / ___| |/ /   |  _ \ / \  |  _ \| ____|  _ \            |    
+|           | |_) | | | | |   | ' /    | |_) / _ \ | |_) |  _| | |_) |           |    
+|           |  _ <| |_| | |___| . \    |  __/ ___ \|  __/| |___|  _ <            |    
+|           |_| \_\\___/ \____|_|\_\   |_| /_/   \_\_|   |_____|_| \_\           |    
+|                ____   ____  ___  ____  ____   ___  ____   ____                 |
+|               / ___| / ___||_ _|/ ___|/ ___| / _ \|  _ \ / ___|                |
+|               \___ \| |     | | \___ \\___ \| | | | |_) |\___ \                |
+|                ___) | |___  | |  ___) |___) | |_| |  _ <  ___) |               |
+|               |____/ \____||___||____/|____/ \___/|_| \_\|____/                |
++--------------------------------------------------------------------------------+
+|                        Welcome to 'ROCK PAPER SCISSORS'!                       |
+| Rules:                                                                         |
+|   - Rock beats Scissors                                                        |
+|   - Paper beats Rock                                                           |
+|   - Scissors beats Paper                                                       |
+| Instructions:                                                                  |   
+|   - Enter 'Rock', 'Paper', or 'Scissors' to play                               |
+|   - Enter 'Exit' to quit the game                                              |              
+| Shortcuts:                                                                     |
+|   [R] - Rock                                                                   |
+|   [P] - Paper                                                                  |
+|   [S] - Scissors                                                               |
+|   [H] - Help                                                                   |
+|   [E] - Exit                                                                   |
+|   [L] - Leaderboard                                                            |
+|   [Reset] - Reset the game                                                     |
+| *Input is case-insensitive                                                     |   
++--------------------------------------------------------------------------------+
+""", end="")
+
 
 def help():
     # Display all instructions and valid user input combinations
-    print("\n------ HELP ------")
-    print("Rules:")
-    print("- Rock beats Scissors")
-    print("- Paper beats Rock")
-    print("- Scissors beats Paper")    
-    print("Instructions:")
-    print("- Enter 'Rock', 'Paper', or 'Scissors' to play")
-    print("- Enter 'Exit' or 'E' to quit the game")
-    print("- Enter 'Help' at any time to see these instructions again")
-    print("- You can also use these shortcuts: \n [R] - Rock \n [P] - Paper \n [S] - Scissors \n [E] - Exit \n [H] - Help \n [L] - Leaderboard")
-    print("(Input is case-insensitive and leading/trailing spaces are ignored)")
-    print("-----------------------------\n")
+    print(r"""
++--------------------------------------------------------------------------------+
+|             _   _ _____ _     ____       __  __ _____ _   _ _    _             |
+|            | | | | ____| |   |  _ \     |  \/  | ____| \ | | |  | |            |
+|            | |_| |  _| | |   | |_) |    | |\/| |  _| |  \| | |  | |            |
+|            |  _  | |___| |___|  __/     | |  | | |___| |\  | \__/ |            |
+|            |_| |_|_____|_____|_|        |_|  |_|_____|_| \_|\____/             |
++--------------------------------------------------------------------------------+
+| Rules:                                                                         |
+|    - Rock beats Scissors                                                       |
+|    - Paper beats Rock                                                          |         
+|    - Scissors beats Paper                                                      |
+| Instructions:                                                                  |
+|    - Enter 'Rock', 'Paper', or 'Scissors' to play                              |
+|    - Enter 'Exit' to quit the game                                             |
+|    - Enter 'Help' at any time to see these instructions again                  |
+|    - Enter 'Reset' to reset the game stats and clear all game data             |
+|    - You can also use these shortcuts:                                         |
+|           [R] - Rock                                                           |
+|           [P] - Paper                                                          |
+|           [S] - Scissors                                                       |
+|           [E] - Exit                                                           |
+|           [H] - Help                                                           |
+|           [L] - Leaderboard, to see your scoreboard                            |
+|           [Reset] - Reset the game                                             |
+| *Input is case-insensitive                                                     |
++--------------------------------------------------------------------------------+
+""", end="")
+    
 
 def select_computer_choice(CHOICES):
-    # Randomly select a choice for the computer
-    computer_choice = random.choice(CHOICES)
-    return computer_choice
+    return random.choice(CHOICES)
 
 def take_input_from_user():
-    # Prompt the user until a valid choice is entered.
     shortcuts = {
         'rock': 'Rock', 'r': 'Rock',
         'paper': 'Paper', 'p': 'Paper',
         'scissors': 'Scissors', 's': 'Scissors',
         'exit': 'Exit', 'e': 'Exit',
         'help': 'Help', 'h': 'Help',
-        'leaderboard': 'Leaderboard', 'l': 'Leaderboard'
+        'leaderboard': 'Leaderboard', 'l': 'Leaderboard',
+        'reset': 'Reset'
     }
     while True:
         try:
+            print()
             user_input = input("Enter your choice: ").strip().lower()
         except EOFError:
-            print("Input error. Please try again.")
-            continue
-        if not user_input:
-            print("You entered nothing. Please enter 'Rock', 'Paper', or 'Scissors'.")
-            continue
-        if user_input in shortcuts:
-            return shortcuts[user_input]
-        print("Invalid input. Please enter only 'Rock', 'Paper', or 'Scissors'.")
+            print("\nNo input received. Exiting...")
+            return 'Exit'
+        else:
+            if user_input in shortcuts:
+                return shortcuts[user_input]
+            else:
+                print("Invalid input! Please enter valid input or 'Help' to know the instructions.")
+
 
 def compute_result(user_choice, computer_choice):
     # Determine round result based on user and computer choices.
@@ -88,125 +137,189 @@ def compute_result(user_choice, computer_choice):
             result = "tie"
     return result
 
-def getemoji(user_choice, computer_choice):
-    # Return emojis for user and computer choices.
-    if (computer_choice=="Rock"):
-        computer_emoji = "✊"
-    elif (computer_choice=="Paper"):
-        computer_emoji = "✋"
-    elif (computer_choice=="Scissors"):
-        computer_emoji = "✌️"
-    else:
-        computer_emoji = ""
-    if (user_choice=="Rock"):
-        user_emoji = "✊"
-    elif (user_choice=="Paper"):
-        user_emoji = "✋"
-    elif (user_choice=="Scissors"):
-        user_emoji = "✌️"
-    else:
-        user_emoji = ""
-    return user_emoji, computer_emoji
 
-def update_score(result, user_win_count, user_win_streak, computer_win_count):
-    # Update win and streak counters based on result.
+def update_score(stats, result, user_win_count, user_win_streak, computer_win_count):
     if result == "won":
         user_win_count += 1
         user_win_streak += 1
+        write_state(stats["rounds_played"] + 1, stats["user_wins"] + 1, stats["computer_wins"], max(stats["high_score"], user_win_streak))
     elif result == "lost":
         user_win_streak = 0
         computer_win_count += 1
+        write_state(stats["rounds_played"] + 1, stats["user_wins"], stats["computer_wins"] + 1, max(stats["high_score"], user_win_streak))
     else:
         user_win_streak = 0
+        write_state(stats["rounds_played"] + 1, stats["user_wins"] , stats["computer_wins"], max(stats["high_score"], user_win_streak))
     return user_win_count, user_win_streak, computer_win_count
 
-def print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, user_emoji, computer_emoji):
-    # Print round number, choices, result, and current score.
-    print(f"\n----- Round {round_number} -----")
-    print(f"     {user_emoji} Vs {computer_emoji}")
-    print(f"You chose: {user_choice}")
-    print(f"Computer chose: {computer_choice}")
-    if result == "won":
-        print("You won! 🥳")
-    elif result == "tie":
-        print("It's a tie! 😐")
-    else:
-        print("You lost! 😥")
-        
-    print(f"Your score is: {user_win_count}")
 
-    # Print message for win streak
-    if user_win_streak >= 2:
-        print(f"Congratulations! You've won {user_win_streak} times in a row! 🤩")
-    print("-------------------\n")
+def display_scoreboard(stats):
+    print("\n+", "-"*80, "+", sep="",end="")
+    print(rf"""                             
+|        ____   ____ ___  ____  _____     ____   ___    _    ____  ____          |
+|       / ___/ / ___/ _ \|  _ \| ____|   | __ ) / _ \  / \  |  _ \|  _ \         |
+|       \___ \| |  | | | | |_) |  _|     |  _ \| | | |/ _ \ | |_) | | | |        |
+|        ___) | |__| |_| |  _ <| |___    | |_) | |_| / ___ \|  _ <| |_| |        |
+|       \____/ \____\___/|_| \_\_____|   |____/ \___/_/   \_\_| \_\____/         |
+""", end="")
+    print("+", "-"*80, "+", sep="")
+    print_screen("", f"You have played a total of {stats["rounds_played"]} {"round" if stats["rounds_played"] == 1 else "rounds"}", "")
+    print_screen("You won", "", f": {stats["user_wins"]:<2} {"round" if stats["user_wins"] == 1 else "rounds"}")
+    print_screen("The Computer won", "", f": {stats["computer_wins"]:<2} {"round" if stats["computer_wins"] == 1 else "rounds"}")
+    print_screen("Your best streak", "", f": {stats["high_score"]:<2} {"round" if stats["high_score"] == 1 else "rounds"} in a row")
+    print("+", "-"*80, "+", sep="")
 
-def display_scoreboard(rounds_played, user_win_count, computer_win_count, hi_score):
-    # Display the scoreboard with rounds played, wins, and best streak.
-    print("\n------ Scoreboard ------")
-    print(f"You have played a total of {rounds_played - 1} rounds")
-    print(f"You won {user_win_count} times")
-    print(f"The Computer won {computer_win_count} times")
-    print(f"Your best streak is {hi_score}")
-    print("-----------------------\n")
 
-def read_int_from_file(filename, default=0):
-    # Read an integer from a file, return default if error.
+def print_screen(left, center, right, spacing=0):
+    padding = 15
+    if center != "":
+        text_width = len(center)
+        left_padding = (WIDTH - text_width) // 2
+        right_padding = WIDTH - text_width - left_padding
+        print("|", " " * left_padding, center, " " * right_padding, "|", sep="")
+    if left != "" and right != "":
+        print("|", " "*padding, f"{left:<25}", " "*spacing, f"{right:<25}", " "*(padding - spacing), "|", sep="")
+
+
+def read_stats(file):
     try:
-        with open(filename) as f:
-            return int(f.read().strip())
-    except (FileNotFoundError, ValueError):
-        return default
+        with open(STATS_FILE) as f:
+            lines = f.readlines()
+            value = lines[STATS_LINE_NUM[file]]
+        return int(value)
+    except (FileNotFoundError, ValueError, IndexError):
+        return 0
 
-def write_int_to_file(filename, value):
-    """Write an integer value to a file."""
+
+def write_state(rounds_played, user_win, computer_win, high_score):
+    # Write rounds_played and high_score to user_states.txt (one value per line).
     try:
-        with open(filename, 'w') as f:
-            f.write(str(value))
+        with open(STATS_FILE, 'w') as f:
+            f.write(f"{rounds_played}\n{user_win}\n{computer_win}\n{high_score}\n")
     except Exception as e:
-        print(f"Error writing to {filename}: {e}")
+        print(f"Error writing to {STATS_FILE}: {e}")
+
+
+def get_ascii(choice):
+    drawings = {
+    "rock": [
+        "    _______    ",
+        "---'  ____ )   ",
+        "     (_____)   ",
+        "     (_____)   ",
+        "     (____)    ",
+        "---.__(___)    "
+    ],
+    "paper": [
+        "     _______       ",
+        "---'    ____ )___  ",
+        "           ______) ",
+        "          _______) ",
+        "         _______)  ",
+        "---.__________)    "
+    ],
+    "scissors": [
+        "    _______       ",
+        "---'  ____ )____  ",
+        "          ______) ",
+        "       __________)",
+        "      (____)       ",
+        "---.__(___)        "
+    ]}
+    return drawings[choice.lower()]
+
+
+def print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, computer_win_count):
+    user_art, computer_art = get_ascii(user_choice), get_ascii(computer_choice)
+    if result == "won":
+        result_msg = "YOU WON! Great move!"
+    elif result == "lost":
+        result_msg = "YOU LOST! Better luck next time!"
+    else:
+        result_msg = "IT'S A TIE! Well played!"
+    
+    print("\n+", "-"*80, "+", sep="")
+    print_screen("", f"Round {round_number} ", "")
+    print("+", "-"*80, "+", sep="")
+    for user_ascii, computer_ascii in zip(user_art, computer_art):
+        print_screen(user_ascii, "", computer_ascii, 10)
+    print_screen(f"    {user_choice.upper()}", "VS", f"    {computer_choice.upper()}",10)
+    print_screen(" ", "", " ")
+    print_screen("", f"{result_msg}", "")
+    print_screen(" ", "", " ")
+    if user_win_streak >= 2:
+        print_screen("", f"You've won {user_win_streak} times in a row!", "")
+        print_screen(" ", "", " ")
+    print_screen(f"Your score is : {user_win_count}", "", f"Computer score is : {computer_win_count}")
+    print("+", "-"*80, "+", sep="")
+
+
+def confirmation(msg):
+    confirmation = False
+    while True:
+        try:
+            confirm = input(msg).strip().lower()
+            if confirm in ['y', 'yes', '1']:
+                confirmation = True
+                break
+            elif confirm in ['n', 'no', '0']:
+                break 
+            else:
+                print("Please enter 'y' to confirm or 'n' to cancel.\n")
+        except EOFError:
+            print("\nNo input received!")
+            break
+    return confirmation
 
 def main():
+    # display the game rules and instructions
     display_rules()
-    user_win_count = 0
-    computer_win_count = 0
-    user_win_streak = 0
-    round_number = 1
-    best_streak = 0
-    HIGH_SCORE_FILE = "highscore.txt"
-    ROUNDS_FILE = "rounds.txt"
-    high_score = read_int_from_file(HIGH_SCORE_FILE)
-    rounds_played = read_int_from_file(ROUNDS_FILE)
+
+    # Initialize counters for wins, streaks, and rounds
+    user_win_count = computer_win_count = user_win_streak = round_number = 0
+
+    # Read high score and rounds played from user_states.txt - if user has played before
+    stats = {
+        "rounds_played": 0, 
+        "user_wins": 0,
+        "computer_wins": 0,
+        "high_score": 0
+        }
+
     try:
         while True:
+            # Save the user win streak every time so it save as a high score
+            for file in stats:
+                stats[file] = read_stats(file)
+                # write_state(stats["rounds_played"] + round_number, stats["user_wins"] + user_win_count, stats["computer_wins"] + computer_win_count, user_win_streak)
+
+            # Prompt user for input and computer randomly selects a choice
             computer_choice = select_computer_choice(CHOICES)
             user_choice = take_input_from_user()
+
+            # Handle user command
             if user_choice == 'Help':
                 help()
-                continue
-            if user_choice == 'Exit':
-                confirm = input("Do you want to exit the game? [y/n] ").strip().lower()
-                if confirm in ['y', 'yes', '1']:
-                    write_int_to_file(ROUNDS_FILE, rounds_played + (round_number - 1))
+            elif user_choice == 'Exit':
+                if confirmation("Do you want to exit the game? [y/n] "):
+                    # write_state(stats["rounds_played"] + round_number, stats["user_wins"] + user_win_count, stats["computer_wins"] + computer_win_count, stats["high_score"])
                     print("Exiting...")
                     break
-                else:
-                    continue
-            if user_choice == "Leaderboard":
-                display_scoreboard(rounds_played + round_number - 1, user_win_count, computer_win_count, high_score)
-                continue
-            result = compute_result(user_choice, computer_choice)
-            user_win_count, user_win_streak, computer_win_count = update_score(result, user_win_count, user_win_streak, computer_win_count)
-            if user_win_streak > best_streak:
-                best_streak = user_win_streak
-            if user_win_streak > high_score and user_win_streak > 1:
-                high_score = user_win_streak
-                print(f"\nYou have set a new high streak of {high_score} wins!")
-                write_int_to_file(HIGH_SCORE_FILE, high_score)
-            print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, getemoji(user_choice, computer_choice)[0], getemoji(user_choice, computer_choice)[1])
-            round_number += 1
+            elif user_choice == "Leaderboard":
+                display_scoreboard(stats)
+            elif user_choice == "Reset":
+                if confirmation("Are you sure you want to reset the game? This will clear your game data. [y/n] "):
+                    user_win_count = computer_win_count = user_win_streak = round_number = 0
+                    write_state(0, 0, 0, 0)
+                    print("Game has been reset.")
+            else:
+                round_number += 1
+                result = compute_result(user_choice, computer_choice)
+                user_win_count, user_win_streak, computer_win_count = update_score(stats, result, user_win_count, user_win_streak, computer_win_count)
+                print_result(result, round_number, user_choice, computer_choice, user_win_count, user_win_streak, computer_win_count)
+    
     except KeyboardInterrupt:
         print("\nGame interrupted. Exiting...")
-        write_int_to_file(ROUNDS_FILE, rounds_played + (round_number - 1))
 
 if __name__ == "__main__":
     main()
